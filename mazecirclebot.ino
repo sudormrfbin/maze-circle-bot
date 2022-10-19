@@ -10,7 +10,7 @@
 #define ON_WHITE 0
 #define ON_BLACK 1
 
-#define SPEED 90
+#define SPEED 100
 
 AF_DCMotor motor1(1, MOTOR12_1KHZ);
 AF_DCMotor motor2(2, MOTOR12_1KHZ);
@@ -49,7 +49,8 @@ void turn(int left_or_right, bool forward_adjust) {
       go_straight();
     }
   }
-
+  stop_moving();
+  delay(200);
   while (digitalRead(middleIR) == ON_WHITE) {
     if (left_or_right == TURN_LEFT) {
       curve_left();
