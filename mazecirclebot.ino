@@ -10,26 +10,28 @@
 #define ON_WHITE 0
 #define ON_BLACK 1
 
+#define SPEED 100
+
 AF_DCMotor motor1(1, MOTOR12_1KHZ);
 AF_DCMotor motor2(2, MOTOR12_1KHZ);
 
 void curve_left() {
-  motor1.setSpeed(100);
-  motor2.setSpeed(100);
+  motor1.setSpeed(SPEED);
+  motor2.setSpeed(SPEED);
   motor1.run(FORWARD);
   motor2.run(BACKWARD);
 }
 
 void curve_right() {
-  motor1.setSpeed(100);
-  motor2.setSpeed(100);
+  motor1.setSpeed(SPEED);
+  motor2.setSpeed(SPEED);
   motor1.run(BACKWARD);
   motor2.run(FORWARD);
 }
 
 void go_straight() {
-  motor1.setSpeed(100);
-  motor2.setSpeed(100);
+  motor1.setSpeed(SPEED);
+  motor2.setSpeed(SPEED);
   motor1.run(FORWARD);
   motor2.run(FORWARD);
 }
@@ -41,9 +43,8 @@ void go_straight() {
 #define NO_FORWARD_ADJUST false
 
 void turn(int left_or_right, bool forward_adjust) {
-  unsigned long startMillis = millis();
-
   if (forward_adjust) {
+    unsigned long startMillis = millis();
     while (millis() - startMillis < GO_FORWARD_ADJUST_TIME) {
       go_straight();
     }
