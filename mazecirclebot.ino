@@ -13,14 +13,14 @@
 AF_DCMotor motor1(1, MOTOR12_1KHZ);
 AF_DCMotor motor2(2, MOTOR12_1KHZ);
 
-void turn_left() {
+void curve_left() {
   motor1.setSpeed(100);
   motor2.setSpeed(100);
   motor1.run(FORWARD);
   motor2.run(BACKWARD);
 }
 
-void turn_right() {
+void curve_right() {
   motor1.setSpeed(100);
   motor2.setSpeed(100);
   motor1.run(BACKWARD);
@@ -51,17 +51,69 @@ void setup() {
   delay(1000);  // 1s delay to do positioning adjustments
 }
 
+/* #define IR(lm, l, m, r, rm) leftMost == lm &&\ */
+/*                             left == l && \ */
+/*                             middle == m && \ */
+/*                             right == r && \ */
+/*                             rightMost == rm */
+/* #define W ON_WHITE */
+/* #define B ON_BLACK */
+
 void loop() {
+  int leftMost = digitalRead(leftMostIR);
   int left = digitalRead(leftIR);
+  int middle = digitalRead(middleIR);
   int right = digitalRead(rightIR);
-  if (left == ON_WHITE && right == ON_WHITE) {
+  int rightMost = digitalRead(rightMostIR);
+
+  if (leftMost == ON_WHITE && // straight line (1)
+      left == ON_WHITE &&
+      middle == ON_BLACK &&
+      right == ON_WHITE &&
+      rightMost == ON_WHITE) {
     go_straight();
-  } else if (left == ON_WHITE && right == ON_BLACK) {
-    turn_left();
-  } else if (left == ON_BLACK && right == ON_WHITE) {
-    turn_right();
-  } else if (left == ON_BLACK && right == ON_BLACK) {
-    stop_moving();
+  } else if ( // left L or left T (3, 5)
+      leftMost == ON_BLACK &&
+      left == ON_BLACK &&
+      middle == ON_BLACK &&
+      right == ON_WHITE &&
+      rightMost == ON_WHITE) {
+    // sharp left
+  } else if ( // T or 4 way intersection (4, 8)
+      leftMost == ON_BLACK &&
+      left == ON_BLACK &&
+      middle == ON_BLACK &&
+      right == ON_BLACK &&
+      rightMost == ON_BLACK) {
+    // sharp left
+  } else if ( // left curve (9)
+      leftMost == ON_WHITE &&
+      left == ON_BLACK &&
+      middle == ON_BLACK &&
+      right == ON_WHITE &&
+      rightMost == ON_WHITE) {
+    curve_left();
+  } else if ( // left curve (9)
+      leftMost == ON_WHITE &&
+      left == ON_BLACK &&
+      middle == ON_WHITE &&
+      right == ON_WHITE &&
+      rightMost == ON_WHITE) {
+    curve_left();
+  } else if ( // right curve (10)
+      leftMost == ON_WHITE &&
+      left == ON_WHITE &&
+      middle == ON_BLACK &&
+      right == ON_BLACK &&
+      rightMost == ON_WHITE) {
+    curve_right();
+  } else if ( // right curve (10)
+      leftMost == ON_WHITE &&
+      left == ON_WHITE &&
+      middle == ON_WHITE &&
+      right == ON_BLACK &&
+      rightMost == ON_WHITE) {
+    curve_right();
   }
 }
 
