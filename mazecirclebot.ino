@@ -49,8 +49,6 @@ void turn(int left_or_right, bool forward_adjust) {
       go_straight();
     }
   }
-  stop_moving();
-  delay(200);
   while (digitalRead(middleIR) == ON_WHITE) {
     if (left_or_right == TURN_LEFT) {
       curve_left();
