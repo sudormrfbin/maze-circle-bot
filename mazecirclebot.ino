@@ -34,6 +34,34 @@ void go_straight() {
   motor2.run(FORWARD);
 }
 
+#define GO_FORWARD_ADJUST_TIME 300
+#define TURN_LEFT 1
+#define TURN_RIGHT 2
+#define FORWARD_ADJUST true
+#define NO_FORWARD_ADJUST false
+
+void turn(int left_or_right, bool forward_adjust) {
+  unsigned long startMillis = millis();
+
+  if (forward_adjust) {
+    while (millis() - startMillis < GO_FORWARD_ADJUST_TIME) {
+      go_straight();
+    }
+  }
+
+  while (digitalRead(middleIR) == ON_WHITE) {
+    if (left_or_right == TURN_LEFT) {
+      curve_left();
+    } else {
+      curve_right();
+    }
+  }
+}
+
+void turnaround() {
+  turn(TURN_LEFT, NO_FORWARD_ADJUST);
+}
+
 void stop_moving() {
   motor1.setSpeed(0);
   motor2.setSpeed(0);
@@ -78,14 +106,14 @@ void loop() {
       middle == ON_BLACK &&
       right == ON_WHITE &&
       rightMost == ON_WHITE) {
-    // sharp left
+    turn(TURN_LEFT, FORWARD_ADJUST);
   } else if ( // T or 4 way intersection (4, 8)
       leftMost == ON_BLACK &&
       left == ON_BLACK &&
       middle == ON_BLACK &&
       right == ON_BLACK &&
       rightMost == ON_BLACK) {
-    // sharp left
+    turn(TURN_LEFT, FORWARD_ADJUST);
   } else if ( // left curve (9)
       leftMost == ON_WHITE &&
       left == ON_BLACK &&
@@ -114,6 +142,13 @@ void loop() {
       right == ON_BLACK &&
       rightMost == ON_WHITE) {
     curve_right();
+  } else if ( // deadend (7)
+      leftMost == ON_WHITE &&
+      left == ON_WHITE &&
+      middle == ON_WHITE &&
+      right == ON_WHITE &&
+      rightMost == ON_WHITE) {
+    turnaround();
   }
 }
 
