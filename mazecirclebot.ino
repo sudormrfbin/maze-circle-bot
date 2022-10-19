@@ -10,7 +10,7 @@
 #define ON_WHITE 0
 #define ON_BLACK 1
 
-#define SPEED 100
+#define SPEED 90
 
 AF_DCMotor motor1(1, MOTOR12_1KHZ);
 AF_DCMotor motor2(2, MOTOR12_1KHZ);
@@ -121,28 +121,28 @@ void loop() {
       middle == ON_BLACK &&
       right == ON_WHITE &&
       rightMost == ON_WHITE) {
-    curve_left();
+    turn(TURN_LEFT, NO_FORWARD_ADJUST);
   } else if ( // left curve (9)
       leftMost == ON_WHITE &&
       left == ON_BLACK &&
       middle == ON_WHITE &&
       right == ON_WHITE &&
       rightMost == ON_WHITE) {
-    curve_left();
+    turn(TURN_LEFT, NO_FORWARD_ADJUST);
   } else if ( // right curve (10)
       leftMost == ON_WHITE &&
       left == ON_WHITE &&
       middle == ON_BLACK &&
       right == ON_BLACK &&
       rightMost == ON_WHITE) {
-    curve_right();
+    turn(TURN_RIGHT, NO_FORWARD_ADJUST);
   } else if ( // right curve (10)
       leftMost == ON_WHITE &&
       left == ON_WHITE &&
       middle == ON_WHITE &&
       right == ON_BLACK &&
       rightMost == ON_WHITE) {
-    curve_right();
+    turn(TURN_RIGHT, NO_FORWARD_ADJUST);
   } else if ( // deadend (7)
       leftMost == ON_WHITE &&
       left == ON_WHITE &&
