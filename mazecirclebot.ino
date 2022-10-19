@@ -106,6 +106,21 @@ void loop() {
       right == ON_BLACK &&
       rightMost == ON_BLACK) {
     turn(TURN_LEFT, NO_FORWARD_ADJUST);
+  } else if ( // right L or right T (2, 6)
+      leftMost == ON_WHITE &&
+      left == ON_WHITE &&
+      middle == ON_BLACK &&
+      right == ON_BLACK &&
+      rightMost == ON_BLACK) {
+    unsigned long startMillis = millis();
+    while (millis() - startMillis < 200) {
+      go_straight();
+    }
+    // Go forward for 200ms and check if there is black line. If there isn't
+    // turn right else go keep going straight.
+    if (digitalRead(middleIR) == ON_WHITE) {
+      turn(TURN_RIGHT, NO_FORWARD_ADJUST);
+    }
   } else if ( // left curve (9)
       leftMost == ON_WHITE &&
       left == ON_BLACK &&
