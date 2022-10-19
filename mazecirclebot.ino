@@ -161,6 +161,27 @@ void loop() {
       middle == ON_WHITE &&
       right == ON_WHITE &&
       rightMost == ON_WHITE) {
-    turnaround();
+    unsigned long startMillis = millis();
+    while (millis() - startMillis < 100) {
+      go_straight();
+    }
+
+    int leftMost = digitalRead(leftMostIR);
+    int left = digitalRead(leftIR);
+    int middle = digitalRead(middleIR);
+    int right = digitalRead(rightIR);
+    int rightMost = digitalRead(rightMostIR);
+    // Sometimes all the sensors may detect white momentarily as it
+    // goes along a curve, triggering the deadend condition. To prevent
+    // false positives, go forward a bit more and check if all sensors
+    // are still on white. If so this is actually a deadend.
+    if (leftMost == ON_WHITE &&
+        left == ON_WHITE &&
+        middle == ON_WHITE &&
+        right == ON_WHITE &&
+        rightMost == ON_WHITE) {
+      turnaround();
+    }
+
   }
 }
