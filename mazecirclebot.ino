@@ -106,14 +106,14 @@ void loop() {
       middle == ON_BLACK &&
       right == ON_WHITE &&
       rightMost == ON_WHITE) {
-    turn(TURN_LEFT, FORWARD_ADJUST);
+    turn(TURN_LEFT, NO_FORWARD_ADJUST);
   } else if ( // T or 4 way intersection (4, 8)
       leftMost == ON_BLACK &&
       left == ON_BLACK &&
       middle == ON_BLACK &&
       right == ON_BLACK &&
       rightMost == ON_BLACK) {
-    turn(TURN_LEFT, FORWARD_ADJUST);
+    turn(TURN_LEFT, NO_FORWARD_ADJUST);
   } else if ( // left curve (9)
       leftMost == ON_WHITE &&
       left == ON_BLACK &&
