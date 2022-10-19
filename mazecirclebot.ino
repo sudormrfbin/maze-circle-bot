@@ -43,6 +43,9 @@ void go_straight() {
 #define NO_FORWARD_ADJUST false
 
 void turn(int left_or_right, bool forward_adjust) {
+  motor1.setSpeed(80);
+  motor2.setSpeed(80);
+
   if (forward_adjust) {
     unsigned long startMillis = millis();
     while (millis() - startMillis < GO_FORWARD_ADJUST_TIME) {
@@ -56,6 +59,9 @@ void turn(int left_or_right, bool forward_adjust) {
       curve_right();
     }
   }
+
+  motor1.setSpeed(SPEED);
+  motor2.setSpeed(SPEED);
 }
 
 void turnaround() {
