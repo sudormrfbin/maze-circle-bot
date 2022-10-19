@@ -15,14 +15,14 @@
 AF_DCMotor motor1(1, MOTOR12_1KHZ);
 AF_DCMotor motor2(2, MOTOR12_1KHZ);
 
-void curve_left() {
+void curve_right() {
   motor1.setSpeed(SPEED);
   motor2.setSpeed(SPEED);
   motor1.run(FORWARD);
   motor2.run(BACKWARD);
 }
 
-void curve_right() {
+void curve_left() {
   motor1.setSpeed(SPEED);
   motor2.setSpeed(SPEED);
   motor1.run(BACKWARD);
