@@ -10,7 +10,7 @@
 #define ON_WHITE 0
 #define ON_BLACK 1
 
-#define SPEED 100
+#define SPEED 90
 
 AF_DCMotor motor1(1, MOTOR12_1KHZ);
 AF_DCMotor motor2(2, MOTOR12_1KHZ);
@@ -79,14 +79,6 @@ void setup() {
   delay(1000);  // 1s delay to do positioning adjustments
 }
 
-/* #define IR(lm, l, m, r, rm) leftMost == lm &&\ */
-/*                             left == l && \ */
-/*                             middle == m && \ */
-/*                             right == r && \ */
-/*                             rightMost == rm */
-/* #define W ON_WHITE */
-/* #define B ON_BLACK */
-
 void loop() {
   int leftMost = digitalRead(leftMostIR);
   int left = digitalRead(leftIR);
@@ -151,5 +143,3 @@ void loop() {
     turnaround();
   }
 }
-
-
