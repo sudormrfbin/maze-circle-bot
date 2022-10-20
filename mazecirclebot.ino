@@ -87,11 +87,7 @@ void setup() {
 
 bool finished_maze = false;
 
-void loop() {
-  if (finished_maze) {
-    return;
-  }
-
+void navigate_maze() {
   int leftMost = digitalRead(leftMostIR);
   int left = digitalRead(leftIR);
   int middle = digitalRead(middleIR);
@@ -200,6 +196,13 @@ void loop() {
         rightMost == ON_WHITE) {
       turnaround();
     }
+  }
+}
 
+void loop() {
+  if (finished_maze) {
+    return;
+  } else {
+    navigate_maze();
   }
 }
