@@ -85,7 +85,13 @@ void setup() {
   delay(1000);  // 1s delay to do positioning adjustments
 }
 
+bool finished_maze = false;
+
 void loop() {
+  if (finished_maze) {
+    return;
+  }
+
   int leftMost = digitalRead(leftMostIR);
   int left = digitalRead(leftIR);
   int middle = digitalRead(middleIR);
@@ -111,7 +117,19 @@ void loop() {
       middle == ON_BLACK &&
       right == ON_BLACK &&
       rightMost == ON_BLACK) {
-    turn(TURN_LEFT, NO_FORWARD_ADJUST);
+    unsigned long startMillis = millis();
+    while (millis() - startMillis < 150) {
+      go_straight();
+    }
+    // Go forward a bit and check if there is black line. If there is
+    // we have reached the end of the maze (big black box) so stop. If
+    // not this was a T or 4 way junction, so turn left.
+    if (digitalRead(middleIR) == ON_BLACK) {
+      stop_moving();
+      finished_maze = true;
+    } else {
+      turn(TURN_LEFT, NO_FORWARD_ADJUST);
+    }
   } else if ( // right L or right T (2, 6)
       leftMost == ON_WHITE &&
       left == ON_WHITE &&
