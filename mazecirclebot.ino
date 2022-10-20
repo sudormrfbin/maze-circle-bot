@@ -162,7 +162,7 @@ void loop() {
       right == ON_WHITE &&
       rightMost == ON_WHITE) {
     unsigned long startMillis = millis();
-    while (millis() - startMillis < 100) {
+    while (millis() - startMillis < 150) {
       go_straight();
     }
 
